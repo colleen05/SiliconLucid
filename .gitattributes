@@ -1,0 +1,17 @@
+# Linguist
+**/*.sl -linguist-detectable
+**/*.lua -linguist-detectable
+
+**/*.c linguist-detectable linguist-language=c
+**/*.h linguist-detectable linguist-language=cpp
+**/*.hpp linguist-detectable linguist-language=cpp
+**/*.cpp linguist-detectable linguist-language=cpp
+
+external/**/*.c linguist-detectable linguist-language=c
+external/**/*.h linguist-detectable linguist-language=cpp
+external/**/*.hpp linguist-detectable linguist-language=cpp
+external/**/*.cpp linguist-detectable linguist-language=cpp
+
+external/lua/*.h linguist-detectable linguist-language=c
+external/raylib/**/*.h linguist-detectable linguist-language=c
+external/rlImGui/**/*.h linguist-detectable linguist-language=c
