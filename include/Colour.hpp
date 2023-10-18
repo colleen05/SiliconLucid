@@ -114,7 +114,7 @@ struct Colour {
      *  @details Constructs a Color struct from a Colour.
      *  @note This is supplied for compatibility with raylib.
      */
-    constexpr operator Color() {
+    constexpr operator Color() const {
         return Color{r, g, b, a};
     }
 };
