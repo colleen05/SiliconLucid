@@ -17,6 +17,7 @@ set(SILICONLUCID_INCLUDE_DIR "./include")
 file(GLOB_RECURSE SILICONLUCID_SOURCE_FILES "./src/*.cpp")
 
 add_subdirectory("./external/Slew")
+add_subdirectory("./external/TinySoundFont")
 
 add_executable(SiliconLucid ${SILICONLUCID_SOURCE_FILES})
 
@@ -25,4 +26,8 @@ target_include_directories(
     PUBLIC ${SILICONLUCID_INCLUDE_DIR}
 )
 
-target_link_libraries(SiliconLucid Slew)
+target_link_libraries(
+    SiliconLucid
+    Slew
+    TinySoundFont
+)
