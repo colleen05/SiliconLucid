@@ -7,12 +7,24 @@
 #include <SiliconLucid.hpp>
 
 int main() {
-    tsf* TinySoundFont = tsf_load_filename("./resources/soundfonts/a320_neo.sf2");
-    tsf_set_output(TinySoundFont, TSF_MONO, 44100, 0); //sample rate
-    tsf_note_on(TinySoundFont, 96, 60, 1.0f); //preset 0, middle C
-    short RenderedSound[44100*2]; //synthesize 1.0 seconds
-    tsf_render_short(TinySoundFont, RenderedSound, 44100*2, 0);
-    tsf_close(TinySoundFont);
+    const int sampleRate = 44100;
+    const int soundDuration = 2;
+    const int preset = 10;
+    const int note = 60;
+    const int noteDuration = 1;
+
+    short renderedSound[sampleRate * soundDuration];
+
+    tsf* synth = tsf_load_filename("./resources/soundfonts/a320_neo.sf2");
+    tsf_set_output(synth, TSF_MONO, sampleRate, 0);
+
+    tsf_note_on(synth, preset, note, 1.0f);
+    tsf_render_short(synth, renderedSound, noteDuration * sampleRate, 0);
+
+    tsf_note_off(synth, preset, note);
+    tsf_render_short(synth, renderedSound + (noteDuration * sampleRate), (soundDuration - noteDuration) * sampleRate, 0);
+
+    tsf_close(synth);
 
     InitWindow(320 * 4, 240 * 4, "SILICON LUCID");
     InitAudioDevice();
@@ -22,7 +34,7 @@ int main() {
         44100,
         16,
         1,
-        &RenderedSound
+        &renderedSound
     };
 
     Sound snd = LoadSoundFromWave(wav);
@@ -32,7 +44,7 @@ int main() {
         ClearBackground(C_DKMAGENTA);
 
         if(IsKeyPressed(KEY_SPACE)) {
-            SetSoundPitch(snd, 0.25f + ((float)GetRandomValue(0, 100) / 100.0f));
+            SetSoundPitch(snd, 0.5f + ((float)GetRandomValue(0, 100) / 100.0f));
             PlaySound(snd);
         }
 
@@ -40,7 +52,6 @@ int main() {
     }
 
     UnloadSound(snd);
-    UnloadWave(wav);
 
     CloseAudioDevice();
     CloseWindow();
